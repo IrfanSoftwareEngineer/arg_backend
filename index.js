@@ -159,11 +159,13 @@ app.get("/Career", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "ARG Backend is running successfully",
-  });
+app.get("/", async (req, res) => {
+  try {
+    res.status(200).send("Backend is running");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
 });
 
 app.listen(port, () => {
