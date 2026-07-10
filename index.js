@@ -22,14 +22,12 @@ const app = express();
 app.use(express.json());
 
 
-const allowedOrigins = [
-  "https://alrehmatglass.vercel.app",
-];
-
 app.use(cors({
-  origin: ['https://alrehmatglass.vercel.app',
-          'http://localhost:3000'],
-  credentials: true
+  origin: [
+    "https://alrehmatglass.vercel.app",
+    "http://localhost:3000",
+  ],
+  credentials: true,
 }));
 
 
