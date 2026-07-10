@@ -27,7 +27,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: ['https://alrehmatglass.vercel.app/',
+  origin: ['https://alrehmatglass.vercel.app',
           'http://localhost:3000'],
   credentials: true
 }));
