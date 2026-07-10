@@ -1,8 +1,12 @@
+require("node:dns/promises").setServers(["1.1.1.1", "8.8.8.8"]);
+
 const express = require("express");
+
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
+const connectDb = require("./db/connect.js");
 
 const sendEmail = require("./sendModel/sendEmail.js"); // Adjust the path as needed
 const sendSms = require("./sendModel/sendSms.js"); // Adjust the path as needed
@@ -11,28 +15,30 @@ const ContactModel = require("./models/contactModel");
 const CareerModel = require("./models/CareerModel");
 const SignUpModel = require("./models/SignUpModel.js");
 
+
+
 const port = 3004;
 const app = express();
 app.use(express.json());
 
-app.use(cors());
+
+const allowedOrigins = [
+  "https://alrehmatglass.vercel.app",
+];
 
 app.use(
   cors({
-    origin: "https://irfanfoundation.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    origin: function (origin, callback) {
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 
-app.use(bodyParser.json());
-
-mongoose.set("strictQuery", false);
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("mongodb is connected"))
-  .catch((err) => console.log("MongoDB connection error: ", err));
-
+connectDb();
 app.post("/Support", (request, response) => {
   ContactModel.create(request.body)
     .then((newDataBinded) => {
