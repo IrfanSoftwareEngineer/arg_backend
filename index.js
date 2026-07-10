@@ -26,17 +26,12 @@ const allowedOrigins = [
   "https://alrehmatglass.vercel.app",
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+app.use(cors({
+  origin: ['https://alrehmatglass.vercel.app/',
+          'http://localhost:3000'],
+  credentials: true
+}));
+
 
 connectDb();
 app.post("/Support", (request, response) => {
