@@ -160,7 +160,10 @@ app.get("/Career", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("API Home");
+  res.status(200).json({
+    success: true,
+    message: "ARG Backend is running successfully",
+  });
 });
 
 app.listen(port, () => {
