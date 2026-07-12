@@ -94,12 +94,12 @@ app.post("/Career", async (request, response) => {
       console.error("Error sending email: ", emailError);
     }
 
-    const smsBody = `New Student Registered:\n
+    const smsBody = `New Job Application Received - Al Rehmat Glass Pvt. Ltd.\n
     Name: ${name} 
     Mobile Number : ${mobile}
     Email: ${email}
-    Course: ${course}
     Current Location : ${location}
+     Applied for: ${course}
     `;
     try {
       await sendSms(process.env.OWNER_PHONE_NUMBER, smsBody);
