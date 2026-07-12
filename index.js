@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
+
 const connectDb = require("./db/connect.js");
 
 const sendEmail = require("./sendModel/sendEmail.js"); // Adjust the path as needed
@@ -59,11 +60,11 @@ app.post("/LogInPage", async (request, response) => {
     const { email, password } = request.body;
     const user = await SignUpModel.find({ email, password });
 
-   console.log("user found",user)
-      response.json(user) 
+    console.log("user found", user)
+    response.json(user)
 
-      
-    }  catch (err) {
+
+  } catch (err) {
     console.log("Error in /LogInPage POST: ", err);
     response.status(500).json(err);
   }
@@ -76,19 +77,19 @@ app.post("/Career", async (request, response) => {
 
     const newData = request.body;
 
-   const career =  await CareerModel.create(newData)
+    const career = await CareerModel.create(newData)
 
-   if(!career){
-    return response.status(400).json({message:"Error while storing data!", success: false})
-   }
+    if (!career) {
+      return response.status(400).json({ message: "Error while storing data!", success: false })
+    }
 
 
     const { name, mobile, email, location, course } = newData;
-    const subject = `New Student Registered Successfully`;
-    const text = `Name: ${name}\nMobile No:${mobile}\nEmail: ${email}\nLocation: ${location}\nCourse: ${course}`;
+    const subject = "New Job Application Received - Al Rehmat Glass Pvt. Ltd.";
+    const text = `Name: ${name}\nMobile No:${mobile}\nEmail: ${email}\nLocation: ${location}\nApplied for: ${course}`;
 
     try {
-      await sendEmail("irfanullah2220@gmail.com", subject, text);
+      await sendEmail("irfanullah1782@gmail.com", subject, text);
     } catch (emailError) {
       console.error("Error sending email: ", emailError);
     }
